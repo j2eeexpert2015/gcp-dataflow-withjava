@@ -1,0 +1,56 @@
+mvn compile exec:java -Dexec.mainClass=dataflowwithjava.dataflow.MinimalisticJob
+
+ERROR: (gcloud.dataflow.jobs.run) PERMISSION_DENIED: (90c46f7df0de2db8): Permission 'resourcemanager.projects.get' denied on project: 'poised-shuttle-384406'
+
+gcloud dataflow jobs run JOB_NAME_TEST --project poised-shuttle-384406 --gcs-location gs://gcpsampleall/dataflow_common/all_jars/gcp-dataflow-withjava-1.0-SNAPSHOT-bundled.jar
+
+java -cp gcp-dataflow-withjava-1.0-SNAPSHOT-bundled.jar dataflowwithjava.dataflow.MinimalisticJob --runner=DataflowRunner --project=project poised-shuttle-384406 --gcpTempLocation=gs:gcpsampleall/dataflow_common/temp
+--inputFile=gs://YOUR_BUCKET/input/inputFile.txt \
+--output=gs://YOUR_BUCKET/output/outputFile.txt
+
+java -jar gcp-dataflow-withjava-1.0-SNAPSHOT-bundled.jar --runner=DataflowRunner --project=poised-shuttle-384406 --gcpTempLocation=gs://gcpsampleall/dataflow_common/temp --region=us-central1
+
+
+mvn clean install
+gcloud dataflow jobs run BQReadDataflow \
+--gcs-location=gs://sample_bucket_all/dataflow/dataflow_jars/gcp_e2e_sample-1.0-SNAPSHOT.jar \
+--region=us-central1 \
+--parameters="runner=DataflowRunner,mainClass=gcpsample.dataflow.BQReadDataflow" \
+--project=poised-shuttle-384406
+
+
+gcloud dataflow jobs run BQReadDataflow \
+--region=us-central1 \
+--gcs-location=gs://dataflow_temp6876 \
+--project=poised-shuttle-384406 \
+--worker-machine-type=n1-standard-1 \
+--max-workers=2 \
+--jar=gs://sample_bucket_all/dataflow/dataflow_jars/gcp_e2e_sample-1.0-SNAPSHOT.jar \
+--class=gcpsample.dataflow.BQReadDataflow
+
+ mvn compile exec:java \
+      -Pdataflow-runner compile exec:java \
+      -Dexec.mainClass=gcpsample.dataflow.BQReadDataflow \
+      -Dexec.args="--project=poised-shuttle-384406 \
+      --stagingLocation=gs://sample_bucket_all/dataflow/dataflow_jars \
+      --output=gs://dataflow_temp6876/output \
+      --runner=DataflowRunner \
+      --region=us-central1 \
+      --gcpTempLocation=gs://dataflow_temp6876/temp"
+
+gsutil cp gcp-samples-1.0-SNAPSHOT.jar gs://gcpsampleall/dataflow_common/all_jars
+gsutil ls gs://gcpsampleall/dataflow_common/all_jars
+
+gsutil cp gcpsamples-1.0-SNAPSHOT.jar gs://gcpsampleall/dataflow_common/all_jars
+
+mvn compile exec:java -Dexec.mainClass=gcpsample.dataflow.BQReadDataflow -Dexec.args="--project=sanguine-anthem-393416 ^
+      --stagingLocation=gs://gcpsampleall/dataflow_common/staging --output=gs://gcpsampleall/dataflow_common/output --runner=DataflowRunner --region=us-central1       --gcpTempLocation=gs://gs://gcpsampleall/dataflow_common/temp"
+
+mvn compile exec:java -Dexec.mainClass=dataflowwithjava.dataflow.MinimalisticJob -Dexec.args="--runner=DataflowRunner --project=sanguine-anthem-393416  --gcpTempLocation=gs://gcpsampleall/dataflow_common/staging --region=us-central1"
+
+java -jar  gcp-dataflow-withjava-1.0-SNAPSHOT-bundled.jar  --project=sanguine-anthem-393416 --stagingLocation=gs://gcpsampleall/dataflow_common/staging --gcpTempLocation=gs://gcpsampleall/dataflow_common/temp --runner=DataflowRunner --jobName=my-custom-job --region=us-central1
+
+java -jar  gcp-dataflow-withjava-1.0-SNAPSHOT-bundled.jar  --project=sanguine-anthem-393416 --stagingLocation=gs://gcpsampleall/dataflow_common/staging --gcpTempLocation=gs://gcpsampleall/dataflow_common/temp --runner=DataflowRunner --jobName=my-custom-job --region=us-central1
+gcloud dataflow jobs run my-job-name --gcs-location=gs://gcpsampleall/gcp_java/gcp-dataflow-withjava-1.0-SNAPSHOT-bundled.jar --region=us-central1 --parameters project=sanguine-anthem-393416,stagingLocation=ggs://gcpsampleall/dataflow_common/staging/,gcpTempLocation=gs://gcpsampleall/dataflow_common/temp,runner=DataflowRunner
+
+
