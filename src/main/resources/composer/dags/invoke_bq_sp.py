@@ -19,6 +19,8 @@ default_dag_args = {
 }
 
 location="us-central1"
+gcp_project_id = "sanguine-anthem-393416"
+dataset_id="demo"
 
 with models.DAG(
         'composer_to_bq_sp_invocation',
@@ -29,7 +31,7 @@ with models.DAG(
     task_id="call_stored_procedure",
     configuration={
         "query": {
-            "query": "CALL `fabled-lyceum-379607.demo.populate_customer`(); ",
+            "query": "CALL `{}.{}.populate_customer`(); ".format(gcp_project_id,dataset_id),
             "useLegacySql": False,
         }
     },

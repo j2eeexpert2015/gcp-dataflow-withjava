@@ -1,0 +1,22 @@
+--Source Table Creation
+CREATE TABLE demo.customers AS
+SELECT 1 AS customer_id, "Customer1" AS customer_name UNION ALL
+SELECT 2, "Customer2" UNION ALL
+SELECT 3, "Customer3" UNION ALL
+SELECT 4, "Customer4" UNION ALL
+SELECT 5, "Customer5"
+;
+--Target Table Creation
+CREATE TABLE demo.newtable LIKE demo.customers
+--Data Check Query
+--select * from `demo.customers`
+--select * from `demo.newtable`
+--truncate table demo.newtable
+
+--Stored Proc Creation
+CREATE OR REPLACE PROCEDURE demo.populate_customer()
+BEGIN
+  INSERT INTO demo.newtable SELECT * FROM demo.customers;
+END
+-- Stored Proc Invocation
+call demo.populate_customer();

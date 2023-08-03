@@ -22,3 +22,15 @@ CREATE TABLE %s.%s.dvcl (
     discount FLOAT64,
     promotion_id STRING)
 """, gcp_project_id,gbq_dataset_id);
+
+EXECUTE IMMEDIATE format("""
+CREATE TABLE %s.%s.sales_summary  (
+    date DATE,
+    vendor_id INT64,
+    location_id INT64,
+    total_sales FLOAT64,
+    max_sales FLOAT64,
+    min_sales FLOAT64,
+    transaction_count INT64,
+    avg_cost FLOAT64
+)""", gcp_project_id,gbq_dataset_id);
