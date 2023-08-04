@@ -6,4 +6,11 @@ gcloud composer environments create composer-2-4-3-env --location us-central1  -
 
 Composer V1 deletion
 ---------------------
-gcloud composer environments delete example-environment --location=us-central1
+gcloud composer environments delete composer-2-4-3-env --location=us-central1
+gcloud composer environments delete my_environment --location=us-central1 --project=my_project_id
+
+
+gcloud composer environments list --locations=us-central1 --project=sanguine-anthem-393416
+gcloud container clusters list --project=sanguine-anthem-393416
+
+gcloud composer environments create composer-df --location us-central1  --image-version composer-1.20.7-airflow-2.4.3
