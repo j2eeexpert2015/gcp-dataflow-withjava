@@ -14,3 +14,4 @@ gcloud composer environments list --locations=us-central1 --project=sanguine-ant
 gcloud container clusters list --project=sanguine-anthem-393416
 
 gcloud composer environments create composer-df --location us-central1  --image-version composer-1.20.7-airflow-2.4.3
+gcloud composer environments delete composer-df --location=us-central1 --project=sanguine-anthem-393416
