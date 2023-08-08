@@ -8,4 +8,8 @@ public interface GCPConstants {
     String GCP_REGION="us-central1";
 
     String GBQ_SOURCE_TABLE_NAME="dvcl";
+
+
+    String PUB_SUB_TOPIC_ID="topic1";
+    String PUB_SUB_SUBSCRIPTION_ID="topic1-sub";
 }

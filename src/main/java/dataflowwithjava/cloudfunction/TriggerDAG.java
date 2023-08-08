@@ -1,5 +1,6 @@
 package dataflowwithjava.cloudfunction;
 
+/**
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -10,11 +11,13 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.cloud.functions.HttpFunction;
 import com.google.cloud.functions.HttpResponse;
 import dataflowwithjava.common.GCPConstants;
-
+**/
 
 import java.util.Collections;
 
-public class TriggerDAG implements HttpFunction {
+public class TriggerDAG {
+        /**
+        implements HttpFunction {
 
 
     @Override
@@ -52,6 +55,6 @@ public class TriggerDAG implements HttpFunction {
         }
 
     }
-
+*/
 
 }
