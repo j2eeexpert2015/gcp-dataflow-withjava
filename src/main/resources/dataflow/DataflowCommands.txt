@@ -98,6 +98,22 @@ mvn compile exec:java \
 --gcpTempLocation=gs://dataflow-base-bucket/temp \
 --region=us-east1"
 
+mvn compile exec:java \
+-P dataflow \
+-Dexec.cleanupDaemonThreads=false \
+-Dexec.mainClass=beamwordcount.WordCount \
+-Dexec.args="--runner=DataflowRunner \
+--project=healthy-reason-396205 \
+--inputFile=gs://dataflow-base-bucket/input/pom.xml \
+--outputFile=gs://dataflow-base-bucket/output \
+--stagingLocation=gs://dataflow-base-bucket/staging \
+--gcpTempLocation=gs://dataflow-base-bucket/temp \
+--templateLocation=gs://dataflow-base-bucket/templates/dftemplate.json \
+--region=us-east1"
+
+gcloud dataflow jobs run template-dataflow --project=healthy-reason-396205 --gcs-location gs://dataflow-base-bucket/templates/dftemplate.json --region us-east1 --max-workers 1 --worker-machine-type n1-standard-1 --staging-location gs://dataflow-base-bucket/staging --disable-public-ips
+
+
 
 
 
