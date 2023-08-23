@@ -81,6 +81,26 @@ mvn compile exec:java \
 
 java -cp ./target/beamwordcount-bundled-VER-1.0.jar beamwordcount.WordCount  --inputFile=gs://dataflow-base-bucket/input/pom.xml --outputFile=gs://dataflow-base-bucket/output --runner=dataflow --project=healthy-reason-396205 --stagingLocation=gs://dataflow-base-bucket/staging/ --gcpTempLocation=gs://dataflow-base-bucket/temp --region=us-east1
 
+mvn clean package -P dataflow
+mvn exec:java -Dexec.mainClass="beamwordcount.WordCount"  -Dexec.args="--region=us-east1 --project=healthy-reason-396205 --inputFile=gs://dataflow-base-bucket/input/pom.xml --outputFile=gs://dataflow-base-bucket/output --runner=dataflow  --stagingLocation=gs://dataflow-base-bucket/staging/ --gcpTempLocation=gs://dataflow-base-bucket/temp "
+java -cp ./target/beamwordcount-bundled-VER-1.0.jar beamwordcount.WordCount --inputFile=test.txt
+
+
+mvn compile exec:java \
+-P dataflow \
+-Dexec.cleanupDaemonThreads=false \
+-Dexec.mainClass=beamwordcount.WordCount \
+-Dexec.args="--runner=DataflowRunner \
+--project=healthy-reason-396205 \
+--inputFile=gs://dataflow-base-bucket/input/pom.xml \
+--outputFile=gs://dataflow-base-bucket/output \
+--stagingLocation=gs://dataflow-base-bucket/staging \
+--gcpTempLocation=gs://dataflow-base-bucket/temp \
+--region=us-east1"
+
+
+
+
 # Create the bucket
 gsutil mb gs://your-bucket-name/
 
