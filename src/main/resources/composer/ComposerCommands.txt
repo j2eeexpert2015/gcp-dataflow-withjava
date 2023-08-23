@@ -1,9 +1,9 @@
 Composer V1 creation
 ---------------------
-gcloud composer environments create composer-1-environment --location us-central1  --image-version composer-1.20.7-airflow-2.4.3
+gcloud composer environments create composer-1-environment --location us-east1  --image-version composer-1.20.12-airflow-2.4.3
 
 gcloud composer environments create composer-2-4-3-env --location us-central1  --image-version composer-1.20.7-airflow-2.4.3
-
+gcloud composer environments create composer-env-2 --location=us-west-1 --image-version composer-1.20.7-airflow-2.4.3
 Composer V1 deletion
 ---------------------
 gcloud composer environments delete composer-2-4-3-env --location=us-central1
@@ -15,3 +15,16 @@ gcloud container clusters list --project=sanguine-anthem-393416
 
 gcloud composer environments create composer-df --location us-central1  --image-version composer-1.20.7-airflow-2.4.3
 gcloud composer environments delete composer-df --location=us-central1 --project=sanguine-anthem-393416
+
+
+gcloud composer environments create example-environment --location us-east1 --zone us-east1-b --image-version composer-1.20.12-airflow-2.4.3 --node-count 3 --disk-size 30GB  --machine-type n1-standard-1
+
+gcloud composer environments create YOUR_ENVIRONMENT_NAME \
+    --location YOUR_REGION \
+    --zone YOUR_ZONE \
+    --node-count 3 \
+    --disk-size 20GB \
+    --machine-type n1-standard-1 \
+    --project YOUR_PROJECT_ID
+
+    --tags group1,production

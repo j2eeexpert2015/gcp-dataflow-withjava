@@ -1,0 +1,35 @@
+gcloud auth login roy.apurba20000@gmail.com --no-launch-browser
+gcloud config set project healthy-reason-396205
+gcloud iam service-accounts create [SERVICE_ACCOUNT_NAME] --display-name "[DISPLAY_NAME]"
+gcloud iam service-accounts keys create ~/key.json --iam-account [SERVICE_ACCOUNT_NAME]@[YOUR_PROJECT_ID].iam.gserviceaccount.com
+
+gcloud auth activate-service-account --key-file=/path/to/your/service-account-key.json
+gcloud auth activate-service-account --key-file=/c/gcp/dataflow-sa.json
+gcloud services list --enabled | grep dataflow.googleapis.com
+gcloud services enable dataflow.googleapis.com
+
+# Create the bucket
+gsutil mb -l us-east1 gs://dataflow-base-bucket/
+gsutil ls us-east1 gs://dataflow-test/
+
+gsutil mb -l us-east1 gs://dataflow-test/
+
+# Create necessary locations
+gsutil cp /dev/null gs://your-bucket-name/staging/
+gsutil cp /dev/null gs://your-bucket-name/templates/
+
+java -cp ./target/beamwordcount-bundled-VER-1.0.jar beamwordcount.WordCount  --inputFile=gs://my-beam-bucket/input/pom.xml --outputFile=gs://my-beam-bucket/output --runner=dataflow --project=bhavcopy --stagingLocation=gs://my-beam-bucket/staging/ --gcpTempLocation=gs://my-beam-bucket/temp
+
+export GOOGLE_APPLICATION_CREDENTIALS="C:\gcp\dataflow-sa.json"
+export PROJECT_ID="healthy-reason-396205"
+gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+gcloud config list account --format "value(core.account)"
+SERVICE_ACCOUNT_EMAIL=$(gcloud config list account --format "value(core.account)")
+gcloud projects get-iam-policy $PROJECT_ID --flatten="bindings[].members" --format='table(bindings.role)' --filter="bindings.members:$SERVICE_ACCOUNT_EMAIL"
+
+
+
+
+
+
+

@@ -57,3 +57,39 @@ java -jar  gcp-dataflow-withjava-1.0-SNAPSHOT-bundled.jar --Dexec.mainClass=data
 gcloud dataflow jobs run bqdataread  --gcs-location=gs://gcpsampleall/gcp_java/gcp-dataflow-withjava-1.0-SNAPSHOT-bundled.jar --region=us-central1 --parameters project=sanguine-anthem-393416,stagingLocation=ggs://gcpsampleall/dataflow_common/staging/,gcpTempLocation=gs://gcpsampleall/dataflow_common/temp,runner=DataflowRunner
 
 mvn compile exec:java -Dexec.mainClass=dataflowwithjava.dataflow.BQRead -Dexec.args="--runner=DataflowRunner --project=sanguine-anthem-393416  --gcpTempLocation=gs://gcpsampleall/dataflow_common/staging --region=us-central1"
+
+mvn compile exec:java -Dexec.mainClass=dataflowwithjava.dataflow.HelloWorld -Dexec.args="--runner=DataflowRunner --project=healthy-reason-396205 \
+                 --stagingLocation=gs://dataflow-base-bucket/staging/ \
+                 --templateLocation=gs://dataflow-base-bucket/templates/helloworld-template \
+                 --region=us-east1"
+
+mvn compile exec:java -Dexec.mainClass=dataflowwithjava.dataflow.HelloWorld -Dexec.args="--runner=DataflowRunner --project=healthy-reason-396205 --templateLocation=gs://dataflow-base-bucket/templates/helloworld-template --region=us-east1"
+mvn compile exec:java -Dexec.mainClass=dataflowwithjava.dataflow.HelloWorld -Dexec.args="--runner=DataflowRunner --project=healthy-reason-396205 --templateLocation=gs://dataflow-base-bucket/templates/helloworld-template --region=us-east1"
+mvn compile exec:java \
+-Dexec.mainClass=org.apache.beam.examples.FileTranslatePipeline \
+-Dexec.args="--runner=DataflowRunner \
+--project=mtech-infosec-tokenize-poc \
+--stagingLocation=gs://btl-dataflow-job/staging \
+--templateLocation=gs://btl-dataflow-job/templates/btl-file-translate-pipeline-template \
+--region=us-central1 \
+--network=mtech-infosec-tokenize-vpc \
+--subnetwork=https://www.googleapis.com/compute/v1/projects/mtech-infosec-tokenize-poc/regions/us-central1/subnetworks/subnet-central1 \
+--inputFile=gs://btl-dataflow-job/TESTFILE.FROM.CITI.2M.txt \
+--output=gs://btl-dataflow-job/NEW_OUTPUT_3W_GCPTESTFILEFROMCITI \
+--numWorkers=3 \
+--serviceAccount=dataflow-default@mtech-infosec-tokenize-poc.iam.gserviceaccount.com"
+
+java -cp ./target/beamwordcount-bundled-VER-1.0.jar beamwordcount.WordCount  --inputFile=gs://dataflow-base-bucket/input/pom.xml --outputFile=gs://dataflow-base-bucket/output --runner=dataflow --project=healthy-reason-396205 --stagingLocation=gs://dataflow-base-bucket/staging/ --gcpTempLocation=gs://dataflow-base-bucket/temp --region=us-east1
+
+# Create the bucket
+gsutil mb gs://your-bucket-name/
+
+# Create necessary locations
+gsutil cp /dev/null gs://dataflow-base-bucket/staging/
+gsutil cp /dev/null gs://dataflow-base-bucket/templates/
+
+gcloud dataflow jobs run helloworld-job \
+    --gcs-location=gs://dataflow-base-bucket/templates/helloworld-template \
+    --region=us-east1
+
+

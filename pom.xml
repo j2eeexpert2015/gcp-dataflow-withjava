@@ -10,7 +10,6 @@
 
     <properties>
         <beam.version>2.49.0</beam.version>
-        <composer.version>1.15.0</composer.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
@@ -30,87 +29,34 @@
             <groupId>org.apache.beam</groupId>
             <artifactId>beam-runners-google-cloud-dataflow-java</artifactId>
             <version>${beam.version}</version>
-           <!-- <scope>runtime</scope>-->
-        </dependency>
-
-            <dependency>
-                <groupId>com.google.cloud.functions</groupId>
-                <artifactId>functions-framework-api</artifactId>
-                <version>1.0.3</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.auth</groupId>
-                <artifactId>google-auth-library-oauth2-http</artifactId>
-                <version>0.22.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.http-client</groupId>
-                <artifactId>google-http-client-gson</artifactId>
-                <version>1.40.1</version>
-            </dependency>
-
-        <!--Pub SUb Libraries-->
-        <!-- https://mvnrepository.com/artifact/com.google.cloud/google-cloud-pubsub -->
-        <dependency>
-            <groupId>com.google.cloud</groupId>
-            <artifactId>google-cloud-pubsub</artifactId>
-            <version>1.124.1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.google.auth/google-auth-library-oauth2-http -->
-        <dependency>
-            <groupId>com.google.auth</groupId>
-            <artifactId>google-auth-library-oauth2-http</artifactId>
-            <version>1.19.0</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>com.google.cloud.functions</groupId>
-                <artifactId>function-maven-plugin</artifactId>
-                <version>0.9.7</version>
-                <configuration>
-                    <functionTarget>dataflowwithjava.cloudfunction.TriggerDAG</functionTarget>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
+                <!--
                 <configuration>
-                    <createDependencyReducedPom>false</createDependencyReducedPom>
-                    <filters>
-                        <filter>
-                            <!-- Do not copy the signatures in the META-INF directory.
-                            Otherwise, this might cause a SecurityException when using the JAR. -->
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.SF</exclude>
-                                <exclude>META-INF/*.DSA</exclude>
-                                <exclude>META-INF/*.RSA</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>dataflowwithjava.dataflow.HelloWorld</mainClass>
+                        </transformer>
+                    </transformers>
                 </configuration>
+                -->
+                <!-- If you're executing the Dataflow job using the mvn compile exec:java command and providing the main class
+                explicitly, then you don't need to specify the Main-Class in the pom.xml.
+                https://datascience.com.co/how-to-create-a-cloud-dataflow-pipeline-using-java-and-apache-maven-fc53279e9424
+                -->
                 <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <finalName>${project.artifactId}-${project.version}-bundled</finalName>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                                <!--
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>dataflowwithjava.dataflow.MinimalisticJob</mainClass>
-                                </transformer>
-                                -->
-                            </transformers>
-
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
